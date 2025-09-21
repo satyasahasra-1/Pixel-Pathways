@@ -40,3 +40,5 @@
 	}
 	window.UI = { el, card, alert, table, formatMinutes, getBadgeForScore };
 })();
+
+

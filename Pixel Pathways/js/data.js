@@ -43,3 +43,5 @@
 
 	window.DB = { classes, quizzes };
 })();
+
+

@@ -43,3 +43,5 @@
 	}
 	window.Admin = { renderAdminPanel };
 })();
+
+

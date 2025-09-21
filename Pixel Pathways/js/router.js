@@ -18,3 +18,5 @@
 	window.Router = { register, navigate };
 	window.addEventListener('hashchange', navigate);
 })();
+
+

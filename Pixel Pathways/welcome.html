@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Pixel Pathways</title>
+    <link rel="stylesheet" href="css/auth-styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="welcome-content">
+                <div class="welcome-icon">🎉</div>
+                <h1>Welcome to Pixel Pathways!</h1>
+                <p id="welcomeMessage">You have successfully signed in.</p>
+                <div class="welcome-actions">
+                    <a href="index.html" class="auth-btn primary">
+                        Go to Dashboard
+                    </a>
+                    <a href="signup.html" class="auth-btn secondary">
+                        Create Another Account
+                    </a>
+                    <button id="logoutBtn" class="auth-btn secondary">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK v10+ -->
+    <script type="module" src="js/welcome.js"></script>
+</body>
+</html>

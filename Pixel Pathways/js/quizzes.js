@@ -60,3 +60,5 @@
 	}
 	window.Quizzes = { renderQuiz, renderQuizzesPage };
 })();
+
+

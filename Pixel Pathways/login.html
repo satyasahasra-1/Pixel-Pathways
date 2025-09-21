@@ -1,139 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Login - Pixel Pathways</title>
-	<script src="https://cdn.tailwindcss.com"></script>
-	<script>
-		// Tailwind config for dark mode
-		tailwind.config = { darkMode: 'class' };
-	</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pixel Pathways</title>
+    <link rel="stylesheet" href="css/auth-styles.css">
 </head>
-<body class="min-h-screen bg-gray-50 dark:bg-gray-900">
-	<div class="flex min-h-screen items-center justify-center p-4">
-		<div class="w-full max-w-md">
-			<div class="text-center mb-6">
-				<img src="file:///C:/Users/Divya/Downloads/Gemini_Generated_Image_nyns4qnyns4qnyns.png" alt="Pixel Pathways" class="mx-auto h-20 w-20 rounded-full shadow-lg ring-2 ring-indigo-500/30 object-cover" />
-				<h1 class="mt-4 text-2xl font-semibold text-gray-900 dark:text-gray-100">Pixel Pathways</h1>
-				<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Sign in to continue your learning journey</p>
-			</div>
-			<div id="root"></div>
-			<div class="mt-4 text-center">
-				<button id="themeToggle" class="text-sm text-gray-600 dark:text-gray-300 hover:underline">Toggle dark mode</button>
-			</div>
-		</div>
-	</div>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Pixel Pathways</h1>
+                <p>Sign in to continue your learning journey</p>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
+                
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="rememberMe">
+                        <span class="checkmark"></span>
+                        Remember me
+                    </label>
+                    <a href="#" id="forgotPassword" class="forgot-link">Forgot password?</a>
+                </div>
+                
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+                <div id="successMessage" class="success-message" style="display: none;"></div>
+                
+                <button type="submit" id="loginBtn" class="auth-btn primary">
+                    <span class="btn-text">Sign In</span>
+                    <span class="btn-spinner" style="display: none;">⏳</span>
+                </button>
+                
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+                
+                <a href="signup.html" class="auth-btn secondary">
+                    Create New Account
+                </a>
+                <a href="index.html" class="auth-btn secondary">
+                    Back to Home
+                </a>
+            </form>
+        </div>
+    </div>
 
-	<!-- React and Firebase (compat) -->
-	<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-	<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
-	<script>
-		// Replace with your Firebase config
-		const firebaseConfig = {
-			apiKey: "YOUR_API_KEY",
-			authDomain: "YOUR_AUTH_DOMAIN",
-			projectId: "YOUR_PROJECT_ID",
-			appId: "YOUR_APP_ID"
-		};
-		firebase.initializeApp(firebaseConfig);
-		const auth = firebase.auth();
-
-		// Theme toggle
-		document.getElementById('themeToggle').addEventListener('click', ()=>{
-			document.documentElement.classList.toggle('dark');
-		});
-
-		const e = React.createElement;
-		function isValidEmail(email){
-			return /[^\s@]+@[^\s@]+\.[^\s@]+/.test(email);
-		}
-
-		function LoginForm(){
-			const [email, setEmail] = React.useState('');
-			const [password, setPassword] = React.useState('');
-			const [remember, setRemember] = React.useState(true);
-			const [loading, setLoading] = React.useState(false);
-			const [error, setError] = React.useState('');
-			const [info, setInfo] = React.useState('');
-
-			const onLogin = async (ev)=>{
-				ev.preventDefault(); setError(''); setInfo('');
-				if(!isValidEmail(email)){ setError('Please enter a valid email address.'); return; }
-				if(!password){ setError('Password cannot be empty.'); return; }
-				setLoading(true);
-				try {
-					await auth.setPersistence(remember ? firebase.auth.Auth.Persistence.LOCAL : firebase.auth.Auth.Persistence.SESSION);
-					await auth.signInWithEmailAndPassword(email, password);
-					localStorage.setItem('pp_authed', '1');
-					localStorage.setItem('pp_user_email', email);
-					window.location.href = 'index.html#/home';
-				} catch (err){
-					setError(err.message || 'Login failed.');
-				} finally { setLoading(false); }
-			};
-
-			const onSignup = async ()=>{
-				setError(''); setInfo('');
-				if(!isValidEmail(email)){ setError('Enter a valid email to sign up.'); return; }
-				if(password.length < 6){ setError('Password must be at least 6 characters.'); return; }
-				setLoading(true);
-				try {
-					await auth.createUserWithEmailAndPassword(email, password);
-					setInfo('Account created. You are now logged in. Redirecting...');
-					localStorage.setItem('pp_authed', '1');
-					localStorage.setItem('pp_user_email', email);
-					setTimeout(()=>{ window.location.href = 'index.html#/home'; }, 600);
-				} catch (err){ setError(err.message || 'Sign up failed.'); }
-				finally { setLoading(false); }
-			};
-
-			const onReset = async ()=>{
-				setError(''); setInfo('');
-				if(!isValidEmail(email)){ setError('Enter your email to reset password.'); return; }
-				setLoading(true);
-				try { await auth.sendPasswordResetEmail(email); setInfo('Password reset email sent.'); }
-				catch(err){ setError(err.message || 'Failed to send reset email.'); }
-				finally { setLoading(false); }
-			};
-
-			return e('form', { className:'bg-white dark:bg-gray-800 shadow rounded-lg p-6 space-y-4 text-center', onSubmit:onLogin }, [
-				e('div', { key:'email' }, [
-					e('label', { className:'block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1' }, 'Email ID'),
-					e('input', { type:'email', className:'w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:ring-indigo-500 focus:border-indigo-500 text-center', value:email, onChange:e=>setEmail(e.target.value), placeholder:'student@example.com', required:true })
-				]),
-				e('div', { key:'pwd' }, [
-					e('label', { className:'block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1' }, 'Password'),
-					e('input', { type:'password', className:'w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:ring-indigo-500 focus:border-indigo-500 text-center', value:password, onChange:e=>setPassword(e.target.value), placeholder:'••••••••', required:true })
-				]),
-				e('div', { key:'row', className:'flex items-center justify-between' }, [
-					e('label', { className:'inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 mx-auto' }, [
-						e('input', { type:'checkbox', checked:remember, onChange:()=>setRemember(!remember), className:'rounded border-gray-300 dark:border-gray-700 text-indigo-600 focus:ring-indigo-500' }),
-						'Remember Me'
-					]),
-					e('button', { type:'button', onClick:onReset, className:'text-sm text-indigo-600 hover:text-indigo-500 dark:text-indigo-400' }, 'Forgot Password?')
-				]),
-				error ? e('div', { key:'err', className:'rounded bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-200 p-2 text-sm transition' }, error) : null,
-				info ? e('div', { key:'info', className:'rounded bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-200 p-2 text-sm transition' }, info) : null,
-				e('div', { key:'actions', className:'space-y-2' }, [
-					e('button', { type:'submit', disabled:loading, className:'w-full inline-flex justify-center items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700 disabled:opacity-70' }, [
-						loading ? e('span', { className:'h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' }) : null,
-						'Login'
-					]),
-					e('button', { type:'button', onClick:onSignup, disabled:loading, className:'w-full rounded-md border border-gray-300 dark:border-gray-700 px-4 py-2 font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-70' }, 'Sign Up')
-				])
-			]);
-		}
-
-		// If already signed in, go straight to app
-		auth.onAuthStateChanged((user)=>{
-			if(user){ localStorage.setItem('pp_authed','1'); localStorage.setItem('pp_user_email', user.email||''); window.location.href='index.html#/home'; }
-		});
-
-		ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(LoginForm));
-	</script>
+    <!-- Firebase SDK v10+ -->
+    <script type="module" src="js/login.js"></script>
 </body>
 </html>

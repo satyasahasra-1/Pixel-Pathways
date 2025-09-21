@@ -23,6 +23,7 @@
 					<li class="nav-item"><a class="nav-link" href="#/chat">Chat</a></li>
 					<li class="nav-item"><a class="nav-link" href="#/analytics">Analytics</a></li>
 					<li class="nav-item"><a class="nav-link" href="#/admin">Admin</a></li>
+					<li class="nav-item"><a class="nav-link" href="welcome.html">Profile</a></li>
 				</ul>
 				<div class="d-flex align-items-center gap-2">
 					<div class="form-check form-switch text-white">
@@ -32,6 +33,17 @@
 					<div class="input-group input-group-sm" style="width: 160px;">
 						<span class="input-group-text">Font</span>
 						<input type="range" class="form-range" id="fontSizeRange" min="14" max="22" value="16" aria-label="Font size">
+					</div>
+					<div class="dropdown">
+						<button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" id="authDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+							<span id="userEmail">Account</span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li><a class="dropdown-item" href="welcome.html">Profile</a></li>
+							<li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item" href="#" id="logoutBtn">Sign Out</a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -53,7 +65,8 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-	<script src="js/auth-gate.js"></script>
+	<!-- Firebase SDK v10+ -->
+	<script type="module" src="js/auth-gate.js"></script>
 	<script src="js/storage.js"></script>
 	<script src="js/data.js"></script>
 	<script src="js/ui.js"></script>

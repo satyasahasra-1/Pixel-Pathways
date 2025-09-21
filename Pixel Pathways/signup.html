@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Pixel Pathways</title>
+    <link rel="stylesheet" href="css/auth-styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Pixel Pathways</h1>
+                <p>Create your account to start learning</p>
+            </div>
+            
+            <form id="signupForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Create a password">
+                    <div class="password-requirements">
+                        <small>Password must be at least 6 characters long</small>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                </div>
+                
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span class="checkmark"></span>
+                        I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+                <div id="successMessage" class="success-message" style="display: none;"></div>
+                
+                <button type="submit" id="signupBtn" class="auth-btn primary">
+                    <span class="btn-text">Create Account</span>
+                    <span class="btn-spinner" style="display: none;">⏳</span>
+                </button>
+                
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+                
+                <a href="login.html" class="auth-btn secondary">
+                    Already have an account? Sign In
+                </a>
+                <a href="index.html" class="auth-btn secondary">
+                    Back to Home
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK v10+ -->
+    <script type="module" src="js/signup.js"></script>
+</body>
+</html>
